@@ -41,10 +41,6 @@ RUN npm install -g tailwindcss
 RUN npx tailwindcss -i ./style/input.css -o ./style/main.css
 
 # set env variables for build
-
-# The source style file. If it ends with _.sass_ or _.scss_ then it will be compiled by `dart-sass`
-# into CSS and processed by lightning css. When release is set, then it will also be minified.
-# ENV LEPTOS_STYLE_FILE "style/main.scss"
 # The browserlist https://browsersl.ist query used for optimizing the CSS.
 ENV LEPTOS_BROWSERQUERY "defaults"
 
@@ -62,7 +58,7 @@ WORKDIR /app
 ENV LEPTOS_OUTPUT_NAME "start-axum"
 ENV LEPTOS_SITE_ROOT "site"
 ENV LEPTOS_SITE_PKG_DIR "pkg"
-ENV LEPTOS_SITE_ADDR "[::]:3000"
+ENV LEPTOS_SITE_ADDR "0.0.0.0:3000"
 ENV LEPTOS_RELOAD_PORT "3001"
 EXPOSE "3000"
 
