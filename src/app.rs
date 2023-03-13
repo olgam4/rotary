@@ -9,7 +9,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! {
         cx,
         <Stylesheet id="leptos" href="/pkg/start-axum.css"/>
-        <Title text="Welcome to Leptos"/>
+        <Title text="Rotary"/>
         <Router>
             <main>
                 <Routes>
@@ -23,16 +23,46 @@ pub fn App(cx: Scope) -> impl IntoView {
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
-    let (count, set_count) = create_signal(cx, 0);
-    let on_click = move |_| set_count.update(|count| *count += 1);
+    let (email, set_email) = create_signal::<String>(cx, "".to_string());
+    let (password, set_password) = create_signal::<String>(cx, "".to_string());
 
+    let submit = move |_| {
+        let email = email.get();
+        let password = password.get();
+
+        log!("email: {}, password: {}", email, password);
+
+        set_email("".to_string());
+        set_password("".to_string());
+    };
     view! { cx,
-        <div class="m-10">
-            <h1 class="text-3xl">"Welcome to Leptos!"</h1>
-            <div class="flex items-center">
-                <button class="m-5 p-2 bg-red-500 rounded-lg hover:scale-105 transition-transform" on:click=on_click>"Click Me !"</button>
-                <p class="text-xl">{count}</p>
+        <div class="m-10 space-y-2">
+            <h1 class="text-3xl">"Welcome to Rotary!"</h1>
+            <div class="flex items-center space-x-4">
+                <input
+                    class="border border-gray-300 rounded p-2"
+                    prop:value={move || email.get()}
+                    placeholder="john@doe.ca"
+                    type="email"
+                    on:input=move |ev| {
+                        let input = event_target_value(&ev);
+                        set_email(input);
+                    }
+                />
+                <input
+                    class="border border-gray-300 rounded p-2"
+                    prop:value={move || password.get()}
+                    placeholder="Password"
+                    type="password"
+                    on:input=move |ev| {
+                        let input = event_target_value(&ev);
+                        set_password(input);
+                    }
+                />
             </div>
+            <button on:click=submit class="bg-blue-500 text-white rounded p-2 hover:scale-105">
+                "Submit"
+            </button>
         </div>
     }
 }
