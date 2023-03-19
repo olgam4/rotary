@@ -26,15 +26,15 @@ fn HomePage(cx: Scope) -> impl IntoView {
     let (email, set_email) = create_signal::<String>(cx, "".to_string());
     let (password, set_password) = create_signal::<String>(cx, "".to_string());
 
-    // let submit = move |_| {
-    //     let email = email.get();
-    //     let password = password.get();
+    let submit = move |_| {
+        let email = email.get();
+        let password = password.get();
 
-    //     log!("email: {}, password: {}", email, password);
+        log!("email: {}, password: {}", email, password);
 
-    //     set_email("".to_string());
-    //     set_password("".to_string());
-    // };
+        set_email("".to_string());
+        set_password("".to_string());
+    };
     view! { cx,
         <div class="m-10 space-y-2">
             <h1 class="text-3xl">"Welcome to Rotary!"</h1>
@@ -60,9 +60,9 @@ fn HomePage(cx: Scope) -> impl IntoView {
                     }
                 />
             </div>
-            // <button on:click=submit class="bg-blue-500 text-white rounded p-2 hover:scale-105">
-            //     "Submit"
-            // </button>
+            <button on:click=submit class="bg-blue-500 text-white rounded p-2 hover:scale-105">
+                "Submit"
+            </button>
         </div>
     }
 }
